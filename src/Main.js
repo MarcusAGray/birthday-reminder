@@ -1,3 +1,4 @@
+import React from "react"
 import birthdays from './data'
 import Birthday from './Birthday'
 
@@ -5,7 +6,7 @@ export default function Main() {
   
   
   function addBirthdays() {
-    return birthdays.map(bday => 
+    return birthdayArray.map(bday => 
       (
         <Birthday 
           key = {bday.id}
@@ -14,14 +15,28 @@ export default function Main() {
           age = {bday.age}
         />
       )
-    )}
+  )}
+
+  function clearBirthdays() {
+    setBirthdayArray([])
+  }
+
+  const [birthdayArray, setBirthdayArray] = React.useState(birthdays)
   
 
   return (
     <div className="main">
-      <h3>5 birthdays today</h3>
+      
+      <div className="birthday-heading">
+        {birthdayArray.length == 0 && <h1>No birthdays today</h1>}
+        {birthdayArray.length > 0 &&
+          <h1>
+              {birthdayArray.length} {birthdayArray.length == 1 ? "birthday" : "birthdays"} today
+          </h1>
+        }
+      </div>
       {addBirthdays()}
-      <button>Clear All</button>
+      <button className="clear-btn" onClick={clearBirthdays}>Clear All</button>
     </div>
   )
 }
